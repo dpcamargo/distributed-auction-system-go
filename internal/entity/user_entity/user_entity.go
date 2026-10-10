@@ -3,7 +3,7 @@ package user_entity
 import (
 	"context"
 
-	"github.com/dpcamargo/fullcycle-auction/internal/internal_error"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/internal_error"
 )
 
 type User struct {

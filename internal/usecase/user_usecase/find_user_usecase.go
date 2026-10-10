@@ -3,8 +3,8 @@ package user_usecase
 import (
 	"context"
 
-	"github.com/dpcamargo/fullcycle-auction/internal/entity/user_entity"
-	"github.com/dpcamargo/fullcycle-auction/internal/internal_error"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/entity/user_entity"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/internal_error"
 )
 
 type UserUseCase struct {

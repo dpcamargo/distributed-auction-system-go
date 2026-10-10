@@ -2,17 +2,20 @@ package auction_usecase
 
 import (
 	"context"
+	"os"
 	"time"
 
-	"github.com/dpcamargo/fullcycle-auction/internal/entity/auction_entity"
-	"github.com/dpcamargo/fullcycle-auction/internal/entity/bid_entity"
-	"github.com/dpcamargo/fullcycle-auction/internal/internal_error"
-	"github.com/dpcamargo/fullcycle-auction/internal/usecase/bid_usecase"
+	"github.com/dpcamargo/distributed-auction-system-go/configuration/logger"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/entity/auction_entity"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/entity/bid_entity"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/internal_error"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/usecase/bid_usecase"
+	"go.uber.org/zap"
 )
 
 type AuctionInputDTO struct {
 	ProductName string           `json:"product_name" binding:"required,min=1"`
-	Category    string           `json:"category" binding:"required,min=2m"`
+	Category    string           `json:"category" binding:"required,min=2"`
 	Description string           `json:"description" binding:"required,min=10,max=200"`
 	Condition   ProductCondition `json:"condition"`
 }
@@ -24,7 +27,7 @@ type AuctionOutputDTO struct {
 	Description string           `json:"description"`
 	Condition   ProductCondition `json:"condition"`
 	Status      AuctionStatus    `json:"status"`
-	Timestamp   time.Time        `json:"timestamp" time_format:"2006-01-02 15:04:05"`
+	Timestamp   time.Time        `json:"timestamp"`
 }
 
 type AuctionUseCaseInterface interface {
@@ -69,5 +72,27 @@ func (au *AuctionUseCase) CreateAuction(ctx context.Context, auctionInput Auctio
 	if err := au.auctionRepositoryInterface.CreateAuction(ctx, auction); err != nil {
 		return err
 	}
+
+	au.scheduleAuctionExpiration(auction.ID)
 	return nil
+}
+
+func (au *AuctionUseCase) scheduleAuctionExpiration(auctionID string) {
+	duration := getAuctionDuration()
+	go func() {
+		time.Sleep(duration)
+		err := au.auctionRepositoryInterface.UpdateAuctionStatus(context.Background(), auctionID, auction_entity.Completed)
+		if err != nil {
+			logger.Error("Error trying to expire auction", err, zap.String("auctionID", auctionID))
+		}
+	}()
+}
+
+func getAuctionDuration() time.Duration {
+	auctionInterval := os.Getenv("AUCTION_INTERVAL")
+	duration, err := time.ParseDuration(auctionInterval)
+	if err != nil {
+		return 5 * time.Minute
+	}
+	return duration
 }

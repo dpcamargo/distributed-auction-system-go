@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/dpcamargo/fullcycle-auction/configuration/rest_err"
+	"github.com/dpcamargo/distributed-auction-system-go/configuration/rest_err"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )

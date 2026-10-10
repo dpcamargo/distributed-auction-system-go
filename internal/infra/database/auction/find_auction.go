@@ -4,9 +4,9 @@ import (
 	"context"
 	"time"
 
-	"github.com/dpcamargo/fullcycle-auction/configuration/logger"
-	"github.com/dpcamargo/fullcycle-auction/internal/entity/auction_entity"
-	"github.com/dpcamargo/fullcycle-auction/internal/internal_error"
+	"github.com/dpcamargo/distributed-auction-system-go/configuration/logger"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/entity/auction_entity"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/internal_error"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.uber.org/zap"
@@ -45,7 +45,7 @@ func (a *AuctionRepository) FindAuctions(
 	}
 	if category != "" {
 		filter["category"] = primitive.Regex{
-			Pattern: productName,
+			Pattern: category,
 			Options: "i",
 		}
 	}

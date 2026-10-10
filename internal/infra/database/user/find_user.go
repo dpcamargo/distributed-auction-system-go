@@ -5,9 +5,9 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/dpcamargo/fullcycle-auction/configuration/logger"
-	"github.com/dpcamargo/fullcycle-auction/internal/entity/user_entity"
-	"github.com/dpcamargo/fullcycle-auction/internal/internal_error"
+	"github.com/dpcamargo/distributed-auction-system-go/configuration/logger"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/entity/user_entity"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/internal_error"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.uber.org/zap"

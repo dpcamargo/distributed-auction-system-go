@@ -3,11 +3,11 @@ package bid_usecase
 import (
 	"context"
 
-	"github.com/dpcamargo/fullcycle-auction/internal/internal_error"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/internal_error"
 )
 
 func (bu *BidUsecase) FindBidByAuctionID(ctx context.Context, auctionID string) ([]BidOutputDTO, *internal_error.InternalError) {
-	bidList, err := bu.FindBidByAuctionID(ctx, auctionID)
+	bidList, err := bu.BidRepository.FindBidByAuctionID(ctx, auctionID)
 	if err != nil {
 		return nil, err
 	}
@@ -26,7 +26,7 @@ func (bu *BidUsecase) FindBidByAuctionID(ctx context.Context, auctionID string) 
 }
 
 func (bu *BidUsecase) FindWinningBidByAuctionID(ctx context.Context, auctionID string) (*BidOutputDTO, *internal_error.InternalError) {
-	bidEntity, err := bu.FindWinningBidByAuctionID(ctx, auctionID)
+	bidEntity, err := bu.BidRepository.FindWinningBidByAuctionID(ctx, auctionID)
 	if err != nil {
 		return nil, err
 	}

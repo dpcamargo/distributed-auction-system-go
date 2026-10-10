@@ -4,11 +4,11 @@ import (
 	"context"
 	"sync"
 
-	"github.com/dpcamargo/fullcycle-auction/configuration/logger"
-	"github.com/dpcamargo/fullcycle-auction/internal/entity/auction_entity"
-	"github.com/dpcamargo/fullcycle-auction/internal/entity/bid_entity"
-	"github.com/dpcamargo/fullcycle-auction/internal/infra/database/auction"
-	"github.com/dpcamargo/fullcycle-auction/internal/internal_error"
+	"github.com/dpcamargo/distributed-auction-system-go/configuration/logger"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/entity/auction_entity"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/entity/bid_entity"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/infra/database/auction"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/internal_error"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.uber.org/zap"
 )

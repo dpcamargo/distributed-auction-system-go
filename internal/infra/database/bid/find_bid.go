@@ -4,16 +4,16 @@ import (
 	"context"
 	"time"
 
-	"github.com/dpcamargo/fullcycle-auction/configuration/logger"
-	"github.com/dpcamargo/fullcycle-auction/internal/entity/bid_entity"
-	"github.com/dpcamargo/fullcycle-auction/internal/internal_error"
+	"github.com/dpcamargo/distributed-auction-system-go/configuration/logger"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/entity/bid_entity"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/internal_error"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.uber.org/zap"
 )
 
 func (bd *BidRepository) FindBidByAuctionID(ctx context.Context, auctionID string) ([]bid_entity.Bid, *internal_error.InternalError) {
-	filter := bson.M{"auctionId": auctionID}
+	filter := bson.M{"auction_id": auctionID}
 
 	cursor, err := bd.Collection.Find(ctx, filter)
 	if err != nil {
@@ -41,10 +41,10 @@ func (bd *BidRepository) FindBidByAuctionID(ctx context.Context, auctionID strin
 }
 
 func (bd *BidRepository) FindWinningBidByAuctionID(ctx context.Context, auctionID string) (*bid_entity.Bid, *internal_error.InternalError) {
-	filter := bson.M{"auctionId": auctionID}
+	filter := bson.M{"auction_id": auctionID}
 
 	var bidEntityMongo BidEntityMongo
-	opts := options.FindOne().SetSort(bson.D{{"amount", -1}})
+	opts := options.FindOne().SetSort(bson.D{{Key: "amount", Value: -1}})
 	if err := bd.Collection.FindOne(ctx, filter, opts).Decode(&bidEntityMongo); err != nil {
 		logger.Error("Error trying to find winning bid", err, zap.String("auctionID", auctionID))
 		return nil, internal_error.NewInternalServerError("Error trying to find find winning bid")

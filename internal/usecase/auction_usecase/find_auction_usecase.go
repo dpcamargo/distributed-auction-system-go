@@ -3,9 +3,9 @@ package auction_usecase
 import (
 	"context"
 
-	"github.com/dpcamargo/fullcycle-auction/internal/entity/auction_entity"
-	"github.com/dpcamargo/fullcycle-auction/internal/internal_error"
-	"github.com/dpcamargo/fullcycle-auction/internal/usecase/bid_usecase"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/entity/auction_entity"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/internal_error"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/usecase/bid_usecase"
 )
 
 func (au *AuctionUseCase) FindAuctions(ctx context.Context, status AuctionStatus, category, productName string) ([]AuctionOutputDTO, *internal_error.InternalError) {

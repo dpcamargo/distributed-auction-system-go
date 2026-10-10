@@ -3,7 +3,7 @@ package rest_err
 import (
 	"net/http"
 
-	"github.com/dpcamargo/fullcycle-auction/internal/internal_error"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/internal_error"
 )
 
 type RestErr struct {

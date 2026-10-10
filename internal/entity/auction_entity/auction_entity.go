@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/dpcamargo/fullcycle-auction/internal/internal_error"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/internal_error"
 	"github.com/google/uuid"
 )
 
@@ -64,4 +64,5 @@ type AuctionRepositoryInterface interface {
 	CreateAuction(ctx context.Context, auctionEntity *Auction) *internal_error.InternalError
 	FindAuctionById(ctx context.Context, id string) (*Auction, *internal_error.InternalError)
 	FindAuctions(ctx context.Context, status AuctionStatus, category, productName string) ([]Auction, *internal_error.InternalError)
+	UpdateAuctionStatus(ctx context.Context, id string, status AuctionStatus) *internal_error.InternalError
 }

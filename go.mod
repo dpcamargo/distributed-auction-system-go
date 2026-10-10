@@ -1,4 +1,4 @@
-module github.com/dpcamargo/fullcycle-auction
+module github.com/dpcamargo/distributed-auction-system-go
 
 go 1.23.3
 

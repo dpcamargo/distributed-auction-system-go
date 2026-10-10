@@ -4,7 +4,7 @@ import (
 	"context"
 	"os"
 
-	"github.com/dpcamargo/fullcycle-auction/configuration/logger"
+	"github.com/dpcamargo/distributed-auction-system-go/configuration/logger"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )

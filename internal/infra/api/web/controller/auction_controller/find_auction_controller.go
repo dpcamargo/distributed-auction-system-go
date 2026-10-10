@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/dpcamargo/fullcycle-auction/configuration/rest_err"
-	"github.com/dpcamargo/fullcycle-auction/internal/usecase/auction_usecase"
+	"github.com/dpcamargo/distributed-auction-system-go/configuration/rest_err"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/usecase/auction_usecase"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
@@ -39,11 +39,15 @@ func (u *AuctionController) FindAuctions(c *gin.Context) {
 	category := c.Query("category")
 	productName := c.Query("productName")
 
-	statusNumber, errConv := strconv.Atoi(status)
-	if errConv != nil {
-		errRest := rest_err.NewBadRequestError("Error trying to validate auction status param")
-		c.JSON(errRest.Code, errRest)
-		return
+	var statusNumber int
+	if status != "" {
+		var errConv error
+		statusNumber, errConv = strconv.Atoi(status)
+		if errConv != nil {
+			errRest := rest_err.NewBadRequestError("Error trying to validate auction status param")
+			c.JSON(errRest.Code, errRest)
+			return
+		}
 	}
 
 	auctions, err := u.AuctionUseCase.FindAuctions(context.Background(),

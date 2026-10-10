@@ -3,9 +3,10 @@ package auction
 import (
 	"context"
 
-	"github.com/dpcamargo/fullcycle-auction/configuration/logger"
-	"github.com/dpcamargo/fullcycle-auction/internal/entity/auction_entity"
-	"github.com/dpcamargo/fullcycle-auction/internal/internal_error"
+	"github.com/dpcamargo/distributed-auction-system-go/configuration/logger"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/entity/auction_entity"
+	"github.com/dpcamargo/distributed-auction-system-go/internal/internal_error"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -44,6 +45,18 @@ func (a *AuctionRepository) CreateAuction(ctx context.Context, auctionEntity *au
 	if err != nil {
 		logger.Error("Error trying to insert auction", err)
 		return internal_error.NewInternalServerError("Error trying to insert auction")
+	}
+	return nil
+}
+
+func (a *AuctionRepository) UpdateAuctionStatus(ctx context.Context, id string, status auction_entity.AuctionStatus) *internal_error.InternalError {
+	filter := bson.M{"_id": id}
+	update := bson.M{"$set": bson.M{"status": status}}
+
+	_, err := a.Collection.UpdateOne(ctx, filter, update)
+	if err != nil {
+		logger.Error("Error trying to update auction status", err)
+		return internal_error.NewInternalServerError("Error trying to update auction status")
 	}
 	return nil
 }

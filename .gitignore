@@ -1,0 +1,7 @@
+.env
+cmd/auction/.env
+auction
+*.exe
+*.out
+vendor/
+.DS_Store
